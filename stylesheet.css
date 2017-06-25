@@ -1,0 +1,20 @@
+.topBar {
+    padding: 10px;
+    background-color: skyblue;
+}
+
+.profileDetails {
+    padding: 20px;
+    float:left;
+   border-style: solid;
+    border-color: gray;
+}
+
+.picture {
+    position: relative;
+    height: 200px;
+    width: 200px;
+    border-style: solid;
+    border-color: gray;
+    float: right;
+}
