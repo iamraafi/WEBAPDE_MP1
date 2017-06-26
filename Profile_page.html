@@ -101,10 +101,10 @@
                             comCount++;
                     }
                     
-                    var commentDiv=$("<div id="+postCount.toString()+">").addClass("callout");
+                    var commentDiv=$("<div id="+(posts[postCount].id).toString()+">").addClass("callout");
                     commentDiv
                     //var cID= apostCount.toString();
-                    var commentLink=$("<a id="+postCount.toString()+">").addClass("comment");
+                    var commentLink=$("<a id="+(posts[postCount].id).toString()+">").addClass("comment");
                     commentLink.html("Show Comments("+comCount+")");
                     commentDiv.html(commentLink);
                     
