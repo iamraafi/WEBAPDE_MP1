@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Foundation | Welcome</title>
+    <title>HOME</title>
     <link rel="stylesheet" href="http://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css">
   </head>
   <body>
@@ -31,30 +31,37 @@
     <!-- We can now combine rows and columns when there's only one column in that row -->
     <div class="row medium-8 large-7 columns" id="post_container">
         <button class="callout" id="show_button">SHOW MORE</button>
-        <button class="callout" id="test_button">count</button>
     </div>
     
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="http://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.js"></script>
+    <script src="js.cookie.js"></script>
     <script>
-        function addPost(aPosts,apostCount,comment_list){
-                var i=apostCount;
-                for(;apostCount<10+i;apostCount++){
+        function addPost(){
+                var i=postCount;
+                for(;postCount<10+i;postCount++){
+                    if(!(postCount in posts)){
+                        $("#show_button").remove();
+                        return;
+                    }
                     var postDiv=$("<div>").addClass("blog-post");
-                    var titleHead=$("<h3>").html(aPosts[apostCount].title);
-                    var author=$("<a>").html("&emsp;by :"+aPosts[apostCount].userId);
+                    var titleHead=$("<h3>").html(posts[postCount].title);
+                    var userName=user_list.find( x=> x.id === posts[postCount].userId).username
+                    var uId=(posts[postCount].userId).toString();
+                    var author=$("<a id="+uId+">").addClass("user_link");
+                    author.html("&emsp;by :"+userName);
                     titleHead.append(author);
-                    var content=$("<p>").html(aPosts[apostCount].body);
+                    var content=$("<p>").html(posts[postCount].body);
                     var comCount=0;
                     for(var k=0;k<comment_list.length;k++){
-                        if(aPosts[apostCount].id==comment_list[k].postId)
+                        if(posts[postCount].id==comment_list[k].postId)
                             comCount++;
                     }
                     
-                    var commentDiv=$("<div id="+apostCount.toString()+">").addClass("callout");
+                    var commentDiv=$("<div id="+postCount.toString()+">").addClass("callout");
                     commentDiv
                     //var cID= apostCount.toString();
-                    var commentLink=$("<a id="+apostCount.toString()+">").addClass("comment");
+                    var commentLink=$("<a id="+postCount.toString()+">").addClass("comment");
                     commentLink.html("Show Comments("+comCount+")");
                     commentDiv.html(commentLink);
                     
@@ -73,16 +80,21 @@
                             var comBody=$("<p style='font-size:11px'>").html(comment_list[k].body);
                             $("#"+this.id+".callout").append(comName);
                             $("#"+this.id+".callout").append(comBody);    
+                        }
                     }
-                }
-            });
+                });
+                $("a.user_link").click(function(){
+                    Cookies.set("user",this.id);
+                    window.location="Profile_page.html";
+                })
                 
-                return apostCount;
+                //return apostCount;
             };
         $(document).foundation();
         var posts;
         var comment_list;
         var postCount=0;
+        var user_list;
         $(document).ready(function(){
             posts=$.parseJSON($.ajax({
                     url: 'http://jsonplaceholder.typicode.com/posts',
@@ -96,57 +108,20 @@
                     dataType:"json",
                     async: false
                 }).responseText);
-            //postCount=addPost(posts,postCount,comment_list);
-            postCount=addPost(posts,postCount,comment_list);
-            
-            //$("#show_button").click(function(){
-            //        postCount=addPost(posts,postCount);
-            //});
-            /*$.get('http://jsonplaceholder.typicode.com/posts',function(data){
-                posts=data;
-                postCount=addPost(posts,postCount);
-                $("#show_button").click(function(){
-                    postCount=addPost(posts,postCount);
-                });
-                //alert(postCount);
-                //$.ajax({});
-            });*/
-            //alert(postCount);
-            
+            user_list=$.parseJSON($.ajax({
+                    url: 'http://jsonplaceholder.typicode.com/users',
+                    type: 'GET',
+                    dataType:"json",
+                    async: false
+                }).responseText);
+                addPost();
             $("#show_button").click(function(){
-                postCount=addPost(posts,postCount,comment_list);
-                /*
-                $("a.comment").click(function(){
-                    alert(this.id);
-                    for(var k=0;k<comment_list.length;k++){
-                        if((parseInt(this.id)+1)==comment_list[k].postId){
-                            var comName=$("<h4 style='font-size: 16px'>").html(comment_list[k].name);
-                            var comEmail=$("<small style='font-size: 13px'>").html("&emsp;"+comment_list[k].email);
-                            comName.append(comEmail);
-                            var comBody=$("<p style='font-size:11px'>").html(comment_list[k].body);
-                            $("#"+this.id+".callout").append(comName);
-                            $("#"+this.id+".callout").append(comBody);    
-                        }
-                    }
-                });*/
+                addPost();
             });
-            /*
-            $("a.comment").click(function(){
-                alert(this.id);
-                for(var k=0;k<comment_list.length;k++){
-                    if((parseInt(this.id)+1)==comment_list[k].postId){
-                        var comName=$("<h4 style='font-size: 16px'>").html(comment_list[k].name);
-                        var comEmail=$("<small style='font-size: 13px'>").html("&emsp;"+comment_list[k].email);
-                        comName.append(comEmail);
-                        var comBody=$("<p style='font-size:11px'>").html(comment_list[k].body);
-                        $("#"+this.id+".callout").append(comName);
-                        $("#"+this.id+".callout").append(comBody);    
-                    }
-                }
-            });*/
+
         });
        
-        //alert(postCount);
+        //alert(postCount); <button class="callout" id="test_button">count</button>
     </script>
   </body>
 </html>

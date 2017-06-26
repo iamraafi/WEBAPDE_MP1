@@ -29,102 +29,222 @@
 
     <div class="callout large primary">
       <div class="row column text-center">
-        <h1 style="text-align: left; float: left; position: relative; margin-left: 10%">Jean de la Croix</h1>
-          <div class="picture">
-        </div>
+        <h1 id="userName"></h1>
+        <h1><small id="baseInfo" style="font-size:19px"></small></h1>
+        
       </div>
     </div>
     
     <div class="row" id="content">
-      <div class="medium-8 columns">
-        <div class="blog-post">
-          <h3>Awesome blog post title <small>3/6/2015</small></h3>
-          <img class="thumbnail" src="http://placehold.it/850x350">
-          <p>Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et justo dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc eu ullamcorper orci. Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque faucibus vestibulum. Nulla at nulla justo, eget luctus.</p>
-          <div class="callout">
-            <ul class="menu simple">
-              <li><a href="#">Author: Mike Mikers</a></li>
-              <li><a href="#">Comments: 3</a></li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="blog-post">
-          <h3>Awesome blog post title <small>3/6/2015</small></h3>
-          <img class="thumbnail" src="http://placehold.it/850x350">
-          <p>Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et justo dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc eu ullamcorper orci. Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque faucibus vestibulum. Nulla at nulla justo, eget luctus.</p>
-          <div class="callout">
-            <ul class="menu simple">
-              <li><a href="#">Author: Mike Mikers</a></li>
-              <li><a href="#">Comments: 3</a></li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="blog-post">
-          <h3>Awesome blog post title <small>3/6/2015</small></h3>
-          <img class="thumbnail" src="http://placehold.it/850x350">
-          <p>Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et justo dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc eu ullamcorper orci. Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque faucibus vestibulum. Nulla at nulla justo, eget luctus.</p>
-          <div class="callout">
-            <ul class="menu simple">
-              <li><a href="#">Author: Mike Mikers</a></li>
-              <li><a href="#">Comments: 3</a></li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="blog-post">
-          <h3>Awesome blog post title <small>3/6/2015</small></h3>
-          <img class="thumbnail" src="http://placehold.it/850x350">
-          <p>Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et justo dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc eu ullamcorper orci. Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque faucibus vestibulum. Nulla at nulla justo, eget luctus.</p>
-          <div class="callout">
-            <ul class="menu simple">
-              <li><a href="#">Author: Mike Mikers</a></li>
-              <li><a href="#">Comments: 3</a></li>
-            </ul>
-          </div>
-        </div>
+      <div id="postContainer" class="medium-8 columns">
       </div>
       <div class="medium-3 columns" data-sticky-container>
-        <div class="sticky" data-sticky data-anchor="content">
-          <h4>About Me</h4>
-          <ul>
-            <li><a href="#">Works at The Krusty Krab</a></li>
-            <li><a href="#">Lives at the home</a></li>
-            <li><a href="#">Is pogi</a></li>
-            <li><a href="#">Atenean = Lasallian</a></li>
-          </ul>
-
-          <h4>Albums</h4>
-          <ul>
-            <li><a href="#">Photos</a></li>
-            <li><a href="#">Blog pictures</a></li>
-            <li><a href="#">Vlogs</a></li>
-            <li><a href="#">...</a></li>
-          </ul>
+        <div class="sticky">
+            <div id="about" class="callout" style="width:300px"><a id="about_cas"><h4 >About Me</h4></a></div>
+           
+            <div id="sidephotos" class="callout" style="width:300px"><h4>Photos</h4></div>
+                <ul>
+                    <li><a href="#">Photos</a></li>
+                    <li><a href="#">Blog pictures</a></li>
+                    <li><a href="#">Vlogs</a></li>
+                    <li><a href="#">...</a></li>
+                </ul>
         </div>
       </div>
     </div>
     
     <div class="row column">
-      <ul class="pagination" role="navigation" aria-label="Pagination">
-        <li class="disabled">Previous</li>
-        <li class="current"><span class="show-for-sr">You're on page</span> 1</li>
-        <li><a href="#" aria-label="Page 2">2</a></li>
-        <li><a href="#" aria-label="Page 3">3</a></li>
-        <li><a href="#" aria-label="Page 4">4</a></li>
-        <li class="ellipsis"></li>
-        <li><a href="#" aria-label="Page 12">12</a></li>
-        <li><a href="#" aria-label="Page 13">13</a></li>
-        <li><a href="#" aria-label="Next page">Next</a></li>
-      </ul>
+      <button class="callout" id="show_button">SHOW MORE</button>
     </div>
     
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="http://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.js"></script>
+    <script src="js.cookie.js"></script>
     <script>
-      $(document).foundation();
+        var posts;
+        var album;
+        var photos;
+        var comment_list;
+        var user;
+        var postCount;
+        function initMap(latlng) {
+            //var latlng={lat:51.5,lng: -0.12};
+            var mapProp= {
+                center:latlng,
+                zoom:11,
+            };
+            var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+            var marker = new google.maps.Marker({
+                position: latlng,
+                map: map,
+                title: 'Location'
+                });
+        }
+        
+         function addPost(){
+                var i=postCount;
+                for(;postCount<4+i;postCount++){
+                    if(!(postCount in posts)){
+                        $("#show_button").remove();
+                        return;
+                    }
+                    var postDiv=$("<div>").addClass("blog-post");
+                    var titleHead=$("<h3>").html(posts[postCount].title);
+                    var uId=(posts[postCount].userId).toString();
+                    var author=$("<a id="+uId+">").addClass("user_link");
+                    author.html("&emsp;by :"+user.username);
+                    titleHead.append(author);
+                    var content=$("<p>").html(posts[postCount].body);
+                    var comCount=0;
+                    for(var k=0;k<comment_list.length;k++){
+                        if(posts[postCount].id==comment_list[k].postId)
+                            comCount++;
+                    }
+                    
+                    var commentDiv=$("<div id="+postCount.toString()+">").addClass("callout");
+                    commentDiv
+                    //var cID= apostCount.toString();
+                    var commentLink=$("<a id="+postCount.toString()+">").addClass("comment");
+                    commentLink.html("Show Comments("+comCount+")");
+                    commentDiv.html(commentLink);
+                    
+                    postDiv.html(titleHead);
+                    postDiv.append(content);
+                    postDiv.append(commentDiv);
+                    //postDiv.insertBefore("#show_button");
+                    $("#postContainer").append(postDiv);
+                }
+                $("a.comment").click(function(){
+                    //alert(this.id);
+                    for(var k=0;k<comment_list.length;k++){
+                        if((parseInt(this.id)+1)==comment_list[k].postId){
+                            var comName=$("<h4 style='font-size: 16px'>").html(comment_list[k].name);
+                            var comEmail=$("<small style='font-size: 13px'>").html("&emsp;"+comment_list[k].email);
+                            comName.append(comEmail);
+                            var comBody=$("<p style='font-size:11px'>").html(comment_list[k].body);
+                            $("#"+this.id+".callout").append(comName);
+                            $("#"+this.id+".callout").append(comBody);    
+                        }
+                    }
+                });
+                
+                //return apostCount;
+            };
+       
+        
+        $(document).foundation();
+        $(document).ready(function(){
+            posts=$.parseJSON($.ajax({
+                    url: 'http://jsonplaceholder.typicode.com/posts',
+                    type: 'GET',
+                    dataType:"json",
+                    async: false
+                }).responseText);
+            comment_list=$.parseJSON($.ajax({
+                    url: 'http://jsonplaceholder.typicode.com/comments',
+                    type: 'GET',
+                    dataType:"json",
+                    async: false
+                }).responseText);
+            var user_list=$.parseJSON($.ajax({
+                    url: 'http://jsonplaceholder.typicode.com/users',
+                    type: 'GET',
+                    dataType:"json",
+                    async: false
+                }).responseText);
+            user=user_list.find( x=> x.id === parseInt(Cookies.get('user')));
+            posts=posts.filter(x=> x.userId === parseInt(Cookies.get('user')));
+            var temp_list=[];
+            for(var i=0;i<posts.length;i++){
+                temp_list.push.apply(temp_list,comment_list.filter(x=> x.postId === posts[i].id));
+            }
+            comment_list=temp_list;
+            //console.log(temp_list);
+            postCount=0;
+            addPost();
+            var notaOpen=false;
+            $("#userName").html(user.username);
+            $("#baseInfo").html(user.name+"&emsp;"+user.email);
+            $("#about_cas").click(function(){
+                if(notaOpen){
+                var aName=$("<text style='font-size:18px'>").html("name: &emsp;"+user.name+"<br>");
+                var username=$("<text style='font-size:18px'>").html("username: &emsp;"+user.username+"<br>");
+                var site=$("<text style='font-size:18px'>").html("website: &emsp;"+user.website+"<br>");
+                var email=$("<li'>").html("email: &emsp;"+user.email+"<br>");
+                var phone=$("<li>").html("phone no: &emsp;"+user.phone+"<br>");
+                //var address=$("<text style='font-size:18px'>").html(user.address.suite+","+user.address.street+","+user.address.city+","+user.address.zipcode);
+                
+                var companyName=$("<li >").html("Company Name: &emsp;"+user.company.name+"("+user.company.catchPhrase+")");
+                var business=$("<li>").html("Business: &emsp;"+user.company.bs);
+                
+                var company_about=$("<text style='font-size:18px'>").html("Company")
+                var com_list=$('<ul style="list-style: none;padding-left:25px;font-size:14px">');
+                //var map=$('<img src="http://maps.googleapis.com/maps/api/staticmap?center=51.5, -0.12&zoom=12&size=300x300&sensor=false">')
+                com_list.append(companyName);
+                com_list.append(business);
+                
+                var contact=$("<text style='font-size:18px'>").html("Contact")
+                var add=$("<li>").html(user.address.suite+","+user.address.street+","+user.address.city+","+user.address.zipcode);
+                var conlist=$('<ul style="list-style: none;padding-left:25px;font-size:14px">').append(email);
+                conlist.append(phone);
+                conlist.append("<li>Address");
+                conlist.append(add);
+                var map=$('<div id="googleMap" style="width:300px;height:300px;"></div>');
+                var newDiv=$("<div id='aboutContainer'style='width:300px'>");
+                newDiv.append(aName);
+                newDiv.append(username);
+                newDiv.append(site);
+                newDiv.append(company_about);
+                newDiv.append(com_list);
+                newDiv.append(contact);
+                newDiv.append(conlist);
+                newDiv.insertBefore("#sidephotos");
+                map.insertBefore("#sidephotos");
+                $("<br>").insertBefore("#sidephotos");
+                
+                /*
+                aName.insertBefore("#googleMap");
+                username.insertBefore("#googleMap");
+                site.insertBefore("#googleMap");
+                company_about.insertBefore("#googleMap");
+                com_list.insertBefore("#googleMap");
+                contact.insertBefore("#googleMap");
+                conlist.insertBefore("#googleMap");
+                */
+                //map.insertBefore("#sidephotos")
+                var coor={
+                    lat:parseInt(user.address.geo.lat),
+                    lng:parseInt(user.address.geo.lng)
+                };
+                initMap(coor);
+                $("#googleMap").css("display","block");
+                notaOpen=false;
+                }else{
+                    $("#googleMap").remove()
+                    $("#aboutContainer").remove();
+                    notaOpen=true;
+                }
+                
+            })
+            $("#show_button").click(function(){
+                addPost();
+            });
+            
+        })
+        /*
+        	AIzaSyCr0ZkardS2gf70vglxgp1lJSZU9kPuuqo
+        <ul style="list-style: none;">
+        <ul>
+            <li>name: &emsp;</li>
+            <li>username: &emsp;</li>
+            <li>email: &emsp;</li>
+            <li>name: &emsp;</li>
+            <li>name: &emsp;</li>
+          </ul>
+        */
     </script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    
   </body>
 </html>
 
