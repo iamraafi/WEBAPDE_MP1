@@ -14,7 +14,7 @@
     position: relative;
     height: 200px;
     width: 200px;
-    border-style: solid;
-    border-color: gray;
+    border: 1px solid grey;
+    border-radius: 5px;
     float: right;
 }
