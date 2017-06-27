@@ -6,28 +6,130 @@
     <title>Profile</title>
     <link rel="stylesheet" href="http://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css">
     <link rel="stylesheet" type="text/css" href="stylesheet.css">
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox-1.3.4.css" type="text/css" media="screen" />
+    <style>
+    
+      
+        div#album_sample{
+            font-size: 0;
+            width: 300px;
+        }  
+        div.gallery{
+            margin-bottom: 5px;
+            width: 300px;
+            margin-right: 5px;
+        }
+         div.gallery img:hover {
+          transform: scale(1.15);
+        }
+
+
+        div.gallery img{
+            width:45%;
+            height:auto;
+            margin-bottom: 5px;
+            margin-right: 5px;
+        }
+        a.hidden{
+            display: none;
+        }
+        
+        .myImg {
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .myImg:hover {opacity: 0.7;}
+
+        /* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            padding-top: 100px; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+        }
+
+        /* Modal Content (image) */
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+        }
+
+        /* Caption of Modal Image */
+        #caption {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            text-align: center;
+            color: #ccc;
+            padding: 10px 0;
+            height: 150px;
+        }
+
+        /* Add Animation */
+        .modal-content, #caption {    
+            -webkit-animation-name: zoom;
+            -webkit-animation-duration: 0.6s;
+            animation-name: zoom;
+            animation-duration: 0.6s;
+        }
+
+        @-webkit-keyframes zoom {
+            from {-webkit-transform:scale(0)} 
+            to {-webkit-transform:scale(1)}
+        }
+
+        @keyframes zoom {
+            from {transform:scale(0)} 
+            to {transform:scale(1)}
+        }
+
+        /* The Close Button */
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* 100% Image Width on Smaller Screens */
+        @media only screen and (max-width: 700px){
+            .modal-content {
+                width: 100%;
+            }
+        }
+    </style>
   </head>
   <body>
     
-    <!-- Start Top Bar -->
-    <div class="top-bar">
+      <div class="top-bar">
       <div class="top-bar-left">
-        <ul class="menu">
-          <li class="menu-text">Bookface</li>
-        </ul>
-      </div>
-      <div class="top-bar-right">
-        <ul class="menu">
-          <li><a href="#">One</a></li>
-          <li><a href="#">Two</a></li>
-          <li><a href="#">Three</a></li>
-          <li><a href="#">Four</a></li>
-        </ul>
+          <txt>&emsp;</txt>
+        <a id="home">HOME</a>
       </div>
     </div>
-    <!-- End Top Bar -->
-
-    <div class="callout large primary">
+    <div class="callout primary">
       <div class="row column text-center">
         <h1 id="userName"></h1>
         <h1><small id="baseInfo" style="font-size:19px"></small></h1>
@@ -37,32 +139,35 @@
     
     <div class="row" id="content">
       <div id="postContainer" class="medium-8 columns">
+        <div id="post_end" class="row column">
+            <button class="button expanded" id="show_button">SHOW MORE</button>
+        </div>
+    
       </div>
       <div class="medium-3 columns" data-sticky-container>
         <div class="sticky">
             <div id="about" class="callout" style="width:300px"><a id="about_cas"><h4 >About Me</h4></a></div>
            
-            <div id="sidephotos" class="callout" style="width:300px"><h4>Photos</h4></div>
-                <ul>
-                    <li><a href="#">Photos</a></li>
-                    <li><a href="#">Blog pictures</a></li>
-                    <li><a href="#">Vlogs</a></li>
-                    <li><a href="#">...</a></li>
-                </ul>
+            <div id="sidephotos" class="callout" style="width:300px">
+            <a id="photo_link"><h4>Photos</h4></a></div>
+            <div id="album_samples" style="font-size:0">
+
+            </div>
+            
         </div>
       </div>
     </div>
     
-    <div class="row column">
-      <button class="callout" id="show_button">SHOW MORE</button>
-    </div>
     
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="http://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.js"></script>
     <script src="js.cookie.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+    
+    
     <script>
         var posts;
-        var album;
+        var albums;
         var photos;
         var comment_list;
         var user;
@@ -79,9 +184,9 @@
                 map: map,
                 title: 'Location'
                 });
-        }
+        };
         
-         function addPost(){
+        function addPost(){
                 var i=postCount;
                 for(;postCount<4+i;postCount++){
                     if(!(postCount in posts)){
@@ -112,7 +217,7 @@
                     postDiv.append(content);
                     postDiv.append(commentDiv);
                     //postDiv.insertBefore("#show_button");
-                    $("#postContainer").append(postDiv);
+                    postDiv.insertBefore("#post_end");
                 }
                 $("a.comment").click(function(){
                     //alert(this.id);
@@ -130,9 +235,9 @@
                 
                 //return apostCount;
             };
-       
         
-        $(document).foundation();
+        
+        //$(document).foundation();
         $(document).ready(function(){
             posts=$.parseJSON($.ajax({
                     url: 'http://jsonplaceholder.typicode.com/posts',
@@ -152,12 +257,83 @@
                     dataType:"json",
                     async: false
                 }).responseText);
+            albums=$.parseJSON($.ajax({
+                    url: 'http://jsonplaceholder.typicode.com/albums',
+                    type: 'GET',
+                    dataType:"json",
+                    async: false
+                }).responseText);
+            photos=$.parseJSON($.ajax({
+                    url: 'http://jsonplaceholder.typicode.com/photos',
+                    type: 'GET',
+                    dataType:"json",
+                    async: false
+                }).responseText);
+            //photos=photos.filter(x=>x.userId===parseInt(Cookies.get('user')));
+            albums=albums.filter(x=>x.userId===parseInt(Cookies.get('user')));
             user=user_list.find( x=> x.id === parseInt(Cookies.get('user')));
             posts=posts.filter(x=> x.userId === parseInt(Cookies.get('user')));
             var temp_list=[];
             for(var i=0;i<posts.length;i++){
                 temp_list.push.apply(temp_list,comment_list.filter(x=> x.postId === posts[i].id));
             }
+        
+            for(var i=0;i<4;i++){
+                var galDiv=$("<div>").addClass("gallery");
+                var k=i+2;
+                for(;i<k;i++){
+                    var temp_pList=photos.filter(x=>x.albumId===albums[i].id);
+                    var x = Math.floor((Math.random()*temp_pList.length));
+                    var aImg=$("<img id="+temp_pList[x].url+" src="+temp_pList[x].thumbnailUrl+" alt=''>").addClass("myImg");
+                    //var aLnk=$('<a rel="group1" href='+temp_pList[x].url+' onclick="showFancybox()"'+'>').addClass("grouped_elements");
+                    //$("a.grouped_elements").fancybox();
+                    galDiv.append(aImg);
+                }
+                $("#album_samples").append(galDiv);
+                
+            }
+            
+            var modal=document.getElementById('myModal');
+            var modalImg=document.getElementById("img01");
+            var captionText=document.getElementById("caption");
+            
+            $(".myImg").click(function(){
+                modal.style.display="block";
+                modalImg.src=this.id;
+                var ephoto=photos.find(x=>x.url===this.id);
+                var ealbum=albums.find(x=>x.id===ephoto.albumId);
+                var euser=user_list.find(x=>x.id===ealbum.userId);
+                captionText.innerHTML= '<h3>'+ephoto.title+' by:</h3><a class="reload">'+euser.username+'</a><txt>&emsp; in &emsp;</txt><a id='+(ephoto.albumId).toString()+' class="exit">'+ealbum.title+'</a>';
+                
+                $(".exit").click(function(){
+                    Cookies.set("aId",this.id);  
+                    window.location="Photos.html";
+                });
+                $(".reload").click(function(){
+                    location.reload(); 
+                });
+            });
+            $("span.close").click(function(){
+                modal.style.display="none";
+            })
+            
+            
+            
+            /*
+            $('.grouped_elements').live('mouseenter', function(){
+                console.log(this.class);
+                $(this).fancybox();
+            });
+            /*
+            
+            <div class="gallery">
+                    <a class="grouped_elements" rel="group1" href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/123941/placeimg06.jpg" data-caption="wow you working" title="what is this"><img class="albumed" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/123941/placeimg06.jpg" alt=""></a>
+                    <a class="grouped_elements" rel="group1" href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/123941/placeimg06.jpg"><img class="albumed" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/123941/placeimg06.jpg" alt=""></a>
+                </div>
+                
+            
+            */
+            
             comment_list=temp_list;
             //console.log(temp_list);
             postCount=0;
@@ -165,6 +341,19 @@
             var notaOpen=false;
             $("#userName").html(user.username);
             $("#baseInfo").html(user.name+"&emsp;"+user.email);
+            //$("a.grouped_elements").fancybox();
+            /*
+            $(".grouped_elements").on('click', 'a', function(e) {
+                e.preventDefault();
+                $("a.grouped_elements").fancybox();
+                 /* the rest */
+            /*
+            });
+            $("#album_samples").on('focusin',function(e){
+                e.preventDefault();
+                $("a.grouped_elements").fancybox();
+            });
+            //$(".fancybox").fancybox();*/
             $("#about_cas").click(function(){
                 if(notaOpen){
                 var aName=$("<text style='font-size:18px'>").html("name: &emsp;"+user.name+"<br>");
@@ -229,6 +418,13 @@
             $("#show_button").click(function(){
                 addPost();
             });
+            $("#photo_link").click(function(){
+                Cookies.set("aId","1");  
+                window.location="Photos.html";
+            });
+           $("#home").click(function(){
+               window.location="Main_page.html"
+           })
             
         })
         /*
@@ -244,7 +440,11 @@
         */
     </script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
-    
+    <div id="myModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="img01">
+        <div id="caption"></div>
+    </div>
   </body>
 </html>
 

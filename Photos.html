@@ -1,0 +1,263 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Foundation | Welcome</title>
+    <link rel="stylesheet" href="http://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css">
+  <style>
+        
+        
+        
+        .thumbnail {
+            width: 100%;
+            height: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .thumbnail:hover {
+            opacity: 0.7;
+            transform: scale(1.15);
+        }
+
+        /* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            padding-top: 100px; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+        }
+
+        /* Modal Content (image) */
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+        }
+
+        /* Caption of Modal Image */
+        #caption {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            text-align: center;
+            color: #ccc;
+            padding: 10px 0;
+            height: 150px;
+        }
+
+        /* Add Animation */
+        .modal-content, #caption {    
+            -webkit-animation-name: zoom;
+            -webkit-animation-duration: 0.6s;
+            animation-name: zoom;
+            animation-duration: 0.6s;
+        }
+
+        @-webkit-keyframes zoom {
+            from {-webkit-transform:scale(0)} 
+            to {-webkit-transform:scale(1)}
+        }
+
+        @keyframes zoom {
+            from {transform:scale(0)} 
+            to {transform:scale(1)}
+        }
+
+        /* The Close Button */
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* 100% Image Width on Smaller Screens */
+        @media only screen and (max-width: 700px){
+            .modal-content {
+                width: 100%;
+            }
+        }
+      
+      
+      
+      </style>
+    </head>
+  <body>
+    
+    <div class="off-canvas-wrapper">
+      <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
+
+        <div class="off-canvas position-left" id="my-info" style="display:hide;overflow:hidden;" data-off-canvas data-position="left"  >
+          <div id="albumselect" class="row column" style="max-height:100%;overflow-y:auto;position:fixed">
+            <br>
+              <button id="home" type="submit" class="button expanded">Home</button>
+              <button id="profile" type="submit" class="button expanded">Profile</button>
+    
+          </div>
+        </div>
+
+        <div class="off-canvas-content" data-off-canvas-content>
+          <div class="title-bar">
+            <div class="title-bar-left">
+              <button class="menu-icon" type="button" data-open="my-info"></button>
+              <span id="user_name" class="title-bar-title"></span>
+            </div>
+          </div>
+          <div class="callout primary">
+            <div class="row column">
+              <h1 id="album_title"></h1>
+            </div>
+          </div>
+          <div id="PContainer" class="row small-up-2 medium-up-3 large-up-4">
+          </div>
+
+          <hr>
+
+          <div class="row">
+                <button id="show_button" class="button expanded">SHOW MORE</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="http://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.js"></script>
+    <script src="js.cookie.js"></script>
+    <script>
+        var photoCount;
+        var albums;
+        var photos;
+        var user;
+        var photo_list;
+        $(document).foundation();
+        function loadAlbums(){
+            for(var i=0;i<albums.length;i++){
+                            
+                var temp_pList=photos.filter(x=>x.albumId===albums[i].id);
+                var x = Math.floor((Math.random()*temp_pList.length));
+                var abDiv=$("<div>").addClass("column");
+                var abImg=$("<img id="+(albums[i].id).toString()+" style='width:100%;height:100%;margin-bottom: 5px;margin-right: 5px;border-radius: 5px;cursor: pointer;transition: 0.3s;' src="+temp_pList[x].thumbnailUrl+">").addClass("aSelec");  
+                var hTitle=$("<h5>").html(albums[i].title);
+                abDiv.html(abImg);
+                abDiv.append(hTitle);
+                $("#albumselect").append(abDiv);    
+            }
+            $(".aSelec").click(function(){
+                Cookies.set("aId",this.id);
+                location.reload(true);
+            });
+            
+        }
+        function loadPhoto(){
+            for(var i=photoCount;photoCount<12+i;photoCount++){
+                if(!(photoCount in photo_list)){
+                    $("#show_button").remove();
+                        return;
+                }
+                var colDiv=$("<div>").addClass("column");
+                var pic=$("<img src="+photo_list[photoCount].thumbnailUrl+" id="+photo_list[photoCount].url+">").addClass("thumbnail");
+                colDiv.html(pic);
+                $("#PContainer").append(colDiv);
+            }
+            var modal=document.getElementById('myModal');
+            var modalImg=document.getElementById("img01");
+            var captionText=document.getElementById("caption");
+            
+            $(".thumbnail").click(function(){
+                modal.style.display="block";
+                modalImg.src=this.id;
+                var ephoto=photo_list.find(x=>x.url===this.id);
+                var ealbum=albums.find(x=>x.id===ephoto.albumId);
+                captionText.innerHTML= '<h3>'+ephoto.title+' by:</h3><a class="reload">'+user.username+'</a><txt>&emsp; in &emsp;</txt><a id='+ephoto.albumId+' class="exit">'+ealbum.title+'</a>';
+                
+                $(".exit").click(function(){
+                    modal.style.display="none";
+                });
+                $(".reload").click(function(){
+                    window.location="Profile_page.html"
+                });
+            });
+            $("span.close").click(function(){
+                modal.style.display="none";
+            })
+        }
+    
+        
+        $(document).ready(function(){
+            photoCount=0;
+            var user_list=$.parseJSON($.ajax({
+                    url: 'http://jsonplaceholder.typicode.com/users',
+                    type: 'GET',
+                    dataType:"json",
+                    async: false
+                }).responseText);
+            albums=$.parseJSON($.ajax({
+                    url: 'http://jsonplaceholder.typicode.com/albums',
+                    type: 'GET',
+                    dataType:"json",
+                    async: false
+                }).responseText);
+            photos=$.parseJSON($.ajax({
+                    url: 'http://jsonplaceholder.typicode.com/photos',
+                    type: 'GET',
+                    dataType:"json",
+                    async: false
+                }).responseText);
+            
+            
+            albums=albums.filter(x=>x.userId===parseInt(Cookies.get('user'))); 
+            loadAlbums();
+            console.log(albums);
+            var albumMain=albums.find(x=> x.id === parseInt(Cookies.get('aId')));
+            //(Cookies.get('aId'));
+            
+            photo_list=photos.filter(x=>x.albumId===albumMain.id);
+            loadPhoto();
+            $("#album_title").html(albumMain.title);
+            user=user_list.find( x=> x.id === parseInt(Cookies.get('user')));
+            $("#user_name").html(user.name);
+            $("#show_button").click(function(){
+               loadPhoto(); 
+            });
+            $("#home").click(function(){
+                window.location="Main_page.html";
+            })
+            $("#profile").click(function(){
+                window.location="Profile_page.html";
+            })
+            
+        });
+    </script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <div id="myModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="img01">
+        <div id="caption"></div>
+    </div>
+  </body>
+</html>
+
+
+    
